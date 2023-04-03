@@ -23,8 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "hoteles")
-@Data
+@Table
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
