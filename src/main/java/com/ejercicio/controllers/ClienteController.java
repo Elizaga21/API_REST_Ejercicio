@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -30,7 +33,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ejercicio.entities.Cliente;
+import com.ejercicio.model.FileUploadResponse;
 import com.ejercicio.services.ClienteService;
+import com.ejercicio.utilities.FileDownloadUtil;
+import com.ejercicio.utilities.FileUploadUtil;
 
 import jakarta.validation.Valid;
 
@@ -40,6 +46,12 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private FileUploadUtil fileUploadUtil;
+
+    @Autowired
+    private FileDownloadUtil fileDownloadUtil;
 
     @GetMapping
     public ResponseEntity<List<Cliente>> findAll(@RequestParam(name = "page", required = false) Integer page,
@@ -146,21 +158,21 @@ public class ClienteController {
         }
 
         // //Si no hay errores persistimos el producto, comprobando previamente si nos han enviado un archivo o imagen
-        // if (!file.isEmpty()) {
-        //     String fileCode = fileUploadUtil.saveFile(file.getOriginalFilename(), file);
-        //     producto.setImagenProducto(fileCode + "-" + file.getOriginalFilename());
+        if (!file.isEmpty()) {
+            String fileCode = fileUploadUtil.saveFile(file.getOriginalFilename(), file);
+            cliente.setImagenProducto(fileCode + "-" + file.getOriginalFilename());
 
-        //     //Devolver respecto al file recibido
+            //Devolver respecto al file recibido
 
-        //     FileUploadResponse fileUploadResponse = FileUploadResponse
-        //     .builder()
-        //     .fileName(fileCode + "-" + file.getOriginalFilename())
-        //     .downLoadURI("/productos/downloadFile/" + fileCode + "-" + file.getOriginalFilename())
-        //     .size(file.getSize())
-        //     .build();
+            FileUploadResponse fileUploadResponse = FileUploadResponse
+            .builder()
+            .fileName(fileCode + "-" + file.getOriginalFilename())
+            .downLoadURI("/productos/downloadFile/" + fileCode + "-" + file.getOriginalFilename())
+            .size(file.getSize())
+            .build();
 
-        //     responseAsMap.put("info de la imagen:", fileUploadResponse);
-        // }
+            responseAsMap.put("info de la imagen:", fileUploadResponse);
+        }
 
         Cliente clienteDataBase = clienteService.save(cliente);
         try {
@@ -317,5 +329,33 @@ public class ClienteController {
          return responseEntity;
      }
 
+
+       /**
+     *  Implementa filedownnload end point API 
+     **/    
+    @GetMapping("/downloadFile/{fileCode}")
+    public ResponseEntity<?> downloadFile(@PathVariable(name = "fileCode") String fileCode) {
+
+        Resource resource = null;
+
+        try {
+            resource = fileDownloadUtil.getFileAsResource(fileCode);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+
+        if (resource == null) {
+            return new ResponseEntity<>("File not found ", HttpStatus.NOT_FOUND);
+        }
+
+        String contentType = "application/octet-stream";
+        String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
+
+        return ResponseEntity.ok()
+        .contentType(MediaType.parseMediaType(contentType))
+        .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+        .body(resource);
+
+    }
 
 }
