@@ -160,7 +160,7 @@ public class ClienteController {
         // //Si no hay errores persistimos el producto, comprobando previamente si nos han enviado un archivo o imagen
         if (!file.isEmpty()) {
             String fileCode = fileUploadUtil.saveFile(file.getOriginalFilename(), file);
-            cliente.setImagenProducto(fileCode + "-" + file.getOriginalFilename());
+            cliente.setImagenCliente(fileCode + "-" + file.getOriginalFilename());
 
             //Devolver respecto al file recibido
 

@@ -19,7 +19,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -52,7 +50,7 @@ public class Cliente implements Serializable {
     private LocalDate fechaAlta; 
 
     @NotNull
-    private String imagenProducto;
+    private String imagenCliente;
 
 
    // @JsonManagedReference //porque se llama al padre
