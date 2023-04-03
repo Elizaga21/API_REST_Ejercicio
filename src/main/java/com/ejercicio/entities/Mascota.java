@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -45,8 +47,13 @@ public class Mascota implements Serializable {
         MACHO, HEMBRA
     }
 
+    @JsonIgnore
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Cliente clientes;
+
+    
+
 
 
     
