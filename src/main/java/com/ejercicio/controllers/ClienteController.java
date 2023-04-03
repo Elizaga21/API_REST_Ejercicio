@@ -167,7 +167,7 @@ public class ClienteController {
             FileUploadResponse fileUploadResponse = FileUploadResponse
             .builder()
             .fileName(fileCode + "-" + file.getOriginalFilename())
-            .downLoadURI("/productos/downloadFile/" + fileCode + "-" + file.getOriginalFilename())
+            .downLoadURI("/clientes/downloadFile/" + fileCode + "-" + file.getOriginalFilename())
             .size(file.getSize())
             .build();
 
