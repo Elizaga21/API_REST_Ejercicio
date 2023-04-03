@@ -18,6 +18,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,7 +42,8 @@ public class Mascota implements Serializable {
     private String nombre;
     private String raza;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")    
+
+    @PastOrPresent //Para poder poner la fecha de hoy y la anterior
     private LocalDate fechaNacimiento; 
 
     @Enumerated(EnumType.STRING)

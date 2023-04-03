@@ -18,6 +18,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +47,7 @@ public class Cliente implements Serializable {
     
     private String apellidos;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")    
+    @PastOrPresent
     private LocalDate fechaAlta; 
 
 
