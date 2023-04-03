@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table(name = "hoteles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,7 +40,7 @@ public class Hotel implements Serializable {
     @Size(min = 4, max = 25, message = "El nombre tiene que estar entre 4 y 25 caracteres")
     private String nombre;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "hotel")
     @JsonIgnore //No se agrega JsonManagedReference porque hay una coleccion/lista
     private List<Cliente> clientes;
 

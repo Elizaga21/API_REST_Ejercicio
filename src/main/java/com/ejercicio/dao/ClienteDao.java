@@ -21,8 +21,8 @@ public interface ClienteDao extends JpaRepository<Cliente, Long> {
      * El siguiente método recupera una página de cliente
      */
 
-     @Query(value = "select c from Cliente c left join fetch c.hotel left join fetch c.mascotas",
-      countQuery = "select count(c) from Cliente c left join c.hotel left join fetch c.mascotas")
+     @Query(value = "select c from Cliente c left join c.hotel left join c.mascotas",
+      countQuery = "select count(c) from Cliente c left join c.hotel left join c.mascotas")
      public Page<Cliente> findAll(Pageable pageable);
 
 
@@ -30,7 +30,7 @@ public interface ClienteDao extends JpaRepository<Cliente, Long> {
       * El método siguiente recupera un cliente por el id
       */
 
-      @Query(value = "select c from Cliente c left join fetch c.hotel left join fetch c.mascotas where c.id = :id")
+      @Query(value = "select c from Cliente c left join c.hotel left join c.mascotas where c.id = :id")
       public Cliente findById(long id);
     
 }

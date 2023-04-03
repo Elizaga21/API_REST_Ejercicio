@@ -25,7 +25,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table(name = "clientes")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,10 +50,10 @@ public class Cliente implements Serializable {
 
 
    // @JsonManagedReference //porque se llama al padre
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Hotel hotel;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "clientes")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "clientes")
     List<Mascota> mascotas;
     
 }
