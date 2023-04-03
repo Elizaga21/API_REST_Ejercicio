@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,6 +43,7 @@ public class Mascota implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd")    
     private LocalDate fechaNacimiento; 
 
+    @Enumerated(EnumType.STRING)
     private Genero genero;
 
     public enum Genero {
@@ -49,8 +52,8 @@ public class Mascota implements Serializable {
 
 
     @JsonIgnore
-    @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+   // @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Cliente clientes;
 
     

@@ -13,7 +13,7 @@ import com.ejercicio.entities.Cliente;
 public interface ClienteDao extends JpaRepository<Cliente, Long> {
 
 
-    @Query(value = "select c from Cliente c inner join fetch c.hotel inner join fetch c.mascotas")
+    @Query(value = "select c from Cliente c left join c.mascotas")
     public List<Cliente> findAll(Sort sort);
 
 
@@ -21,7 +21,8 @@ public interface ClienteDao extends JpaRepository<Cliente, Long> {
      * El siguiente método recupera una página de cliente
      */
 
-     @Query(value = "select c from Cliente c left join fetch c.hotel left join fetch c.mascotas", countQuery = "select count(c) from Cliente c left join c.hotel")
+     @Query(value = "select c from Cliente c left join fetch c.hotel left join fetch c.mascotas",
+      countQuery = "select count(c) from Cliente c left join c.hotel left join fetch c.mascotas")
      public Page<Cliente> findAll(Pageable pageable);
 
 

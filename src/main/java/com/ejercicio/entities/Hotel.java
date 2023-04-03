@@ -40,7 +40,7 @@ public class Hotel implements Serializable {
     @Size(min = 4, max = 25, message = "El nombre tiene que estar entre 4 y 25 caracteres")
     private String nombre;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hotel")
     @JsonIgnore //No se agrega JsonManagedReference porque hay una coleccion/lista
     private List<Cliente> clientes;
 

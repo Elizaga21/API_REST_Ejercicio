@@ -49,7 +49,7 @@ public class Cliente implements Serializable {
     private LocalDate fechaAlta; 
 
 
-    @JsonManagedReference //porque se llama al padre
+   // @JsonManagedReference //porque se llama al padre
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Hotel hotel;
 
