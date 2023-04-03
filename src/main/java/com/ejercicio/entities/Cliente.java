@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -48,11 +49,11 @@ public class Cliente implements Serializable {
     private LocalDate fechaAlta; 
 
 
+    @JsonManagedReference //porque se llama al padre
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Hotel hotel;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "clientes")
-    @JsonBackReference
     List<Mascota> mascotas;
     
 }

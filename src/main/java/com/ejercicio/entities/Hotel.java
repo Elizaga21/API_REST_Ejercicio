@@ -3,6 +3,7 @@ package com.ejercicio.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -40,8 +41,7 @@ public class Hotel implements Serializable {
     private String nombre;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
-    @JsonIgnore
-    @JsonManagedReference
+    @JsonIgnore //No se agrega JsonManagedReference porque hay una coleccion/lista
     private List<Cliente> clientes;
 
 

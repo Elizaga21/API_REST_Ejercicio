@@ -47,6 +47,7 @@ public class Mascota implements Serializable {
         MACHO, HEMBRA
     }
 
+
     @JsonIgnore
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
