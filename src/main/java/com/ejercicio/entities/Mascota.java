@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -18,7 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Past;
+
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,11 +53,10 @@ public class Mascota implements Serializable {
     public enum Genero {
         MACHO, HEMBRA
     }
-
-
+    
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore
-   // @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Cliente clientes;
 
     

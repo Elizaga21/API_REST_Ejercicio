@@ -3,9 +3,10 @@ package com.ejercicio.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -40,7 +41,8 @@ public class Hotel implements Serializable {
     @Size(min = 4, max = 25, message = "El nombre tiene que estar entre 4 y 25 caracteres")
     private String nombre;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "hotel")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "hotel")
     @JsonIgnore //No se agrega JsonManagedReference porque hay una coleccion/lista
     private List<Cliente> clientes;
 
